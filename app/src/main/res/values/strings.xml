@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">PlaylistManager</string>
+    <string name="button_addSong">Add Song</string>
+    <string name="songTitle">Title</string>
+    <string name="songArtist">Artist</string>
+    <string name="songDuration">Duration</string>
+    <string name="songReleaseYear">Year it was released</string>
+    <string name="songWonAward">Did it win an award?</string>
 </resources>
