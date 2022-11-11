@@ -6,4 +6,6 @@
     <string name="songDuration">Duration</string>
     <string name="songReleaseYear">Year it was released</string>
     <string name="songWonAward">Did it win an award?</string>
+    <string name="menu_addPlaylist">Add</string>
+    <string name="playlistName">Name</string>
 </resources>

@@ -1,3 +1,9 @@
 package org.wit.playlistmanager.models
 
-data class PlaylistModel(var name: String, var songs: SongModel)
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class PlaylistModel(var id:Long = 0,
+                         var name: String,
+                         var songs: SongModel) : Parcelable
