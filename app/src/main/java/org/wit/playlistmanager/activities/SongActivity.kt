@@ -20,15 +20,15 @@ class SongActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolbarAdd.title = title
-        setSupportActionBar(binding.toolbarAdd)
-
         app = application as MainApp
 
         var playlist = PlaylistModel()
         if (intent.hasExtra("playlist_add_song")) {
             playlist = intent.extras?.getParcelable("playlist_add_song")!!
         }
+
+        binding.toolbarAdd.title = "Add a song to "+playlist.name
+        setSupportActionBar(binding.toolbarAdd)
 
         binding.btnAdd.setOnClickListener() {
             song.title = binding.songTitle.text.toString()

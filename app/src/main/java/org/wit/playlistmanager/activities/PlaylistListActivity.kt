@@ -23,7 +23,7 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
         super.onCreate(savedInstanceState)
         binding = ActivityPlaylistListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.toolbar.title = title
+        binding.toolbar.title = "Your Playlists"
         setSupportActionBar(binding.toolbar)
 
         app = application as MainApp
@@ -31,32 +31,12 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = PlaylistAdapter(app.playlists.findAll(), this)
-    }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_add -> {
-                val launcherIntent = Intent(this, PlaylistActivity::class.java)
-                getResult.launch(launcherIntent)
-            }
+        binding.addPlaylist.setOnClickListener{
+            val launcherIntent = Intent(this, PlaylistActivity::class.java)
+            getClickResult.launch(launcherIntent)
         }
-        return super.onOptionsItemSelected(item)
     }
-
-    private val getResult =
-        registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.playlists.findAll().size)
-            }
-        }
 
     override fun onEditButtonClick(playlist: PlaylistModel) {
         val launcherIntent = Intent(this, PlaylistActivity::class.java)

@@ -12,6 +12,6 @@ class MainApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        //playlists.create(PlaylistModel(0,"Pop", arrayListOf(SongModel())))
+        playlists.create(PlaylistModel(0,"Pop", arrayListOf(SongModel())))
     }
 }
