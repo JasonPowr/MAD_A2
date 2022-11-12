@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="177dp"
         android:padding="16dp"
         tools:layout_editor_absoluteY="1dp">
 
@@ -24,15 +24,44 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="A Title" />
 
+        <TextView
+            android:id="@+id/playlistCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="56dp"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="-" />
+
         <Button
             android:id="@+id/edit_playlistName"
             android:layout_width="61dp"
-            android:layout_height="39dp"
+            android:layout_height="48dp"
             android:layout_marginStart="12dp"
             android:drawableEnd="@android:drawable/ic_menu_edit"
             app:layout_constraintStart_toEndOf="@+id/playlistName"
-            tools:ignore="MissingConstraints"
+            tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
             tools:layout_editor_absoluteY="1dp" />
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="223dp"
+            android:layout_height="48dp"
+            android:layout_margin="16dp"
+            android:background="@color/colorAccent"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:stateListAnimator="@null"
+            android:text="@string/button_addSong"
+            android:textColor="#212121"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -4,14 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.wit.playlistmanager.databinding.CardPlaylistBinding
-import org.wit.playlistmanager.models.PlaylistModel
+import org.wit.playlistmanager.models.playlist.PlaylistModel
 
 interface PlaylistListener {
     fun onEditButtonClick(playlist: PlaylistModel)
+    fun onAddButtionClick(playlist: PlaylistModel)
 }
 
 class PlaylistAdapter constructor(private var playlists: List<PlaylistModel>,
-        private val listener: PlaylistListener) :
+                                  private val listener: PlaylistListener) :
     RecyclerView.Adapter<PlaylistAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -33,7 +34,10 @@ class PlaylistAdapter constructor(private var playlists: List<PlaylistModel>,
 
         fun bind(playlist: PlaylistModel, listener: PlaylistListener) {
             binding.playlistName.text = playlist.name
+            val trueSize = playlist.songs.size -1
+            binding.playlistCount.text = trueSize.toString()
             binding.editPlaylistName.setOnClickListener {listener.onEditButtonClick(playlist)}
+            binding.btnAdd.setOnClickListener{listener.onAddButtionClick(playlist)}
         }
 
     }

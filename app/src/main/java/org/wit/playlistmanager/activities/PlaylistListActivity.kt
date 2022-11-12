@@ -4,21 +4,17 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import org.wit.playlistmanager.R
 import org.wit.playlistmanager.adapters.PlaylistAdapter
 import org.wit.playlistmanager.adapters.PlaylistListener
 import org.wit.playlistmanager.databinding.ActivityPlaylistListBinding
-import org.wit.playlistmanager.databinding.CardPlaylistBinding
 import org.wit.playlistmanager.main.MainApp
-import org.wit.playlistmanager.models.PlaylistModel
+import org.wit.playlistmanager.models.playlist.PlaylistModel
+import org.wit.playlistmanager.models.song.SongModel
 
 class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
     lateinit var app: MainApp
@@ -66,6 +62,12 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
     override fun onEditButtonClick(playlist: PlaylistModel) {
         val launcherIntent = Intent(this, PlaylistActivity::class.java)
         launcherIntent.putExtra("playlist_edit", playlist)
+        getClickResult.launch(launcherIntent)
+    }
+
+    override fun onAddButtionClick(playlist: PlaylistModel) {
+        val launcherIntent = Intent(this, SongActivity::class.java)
+        launcherIntent.putExtra("playlist_add_song", playlist)
         getClickResult.launch(launcherIntent)
     }
 
