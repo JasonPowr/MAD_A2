@@ -1,5 +1,9 @@
 package org.wit.playlistmanager.models
 
+import org.wit.playlistmanager.models.playlist.PlaylistModel
+import org.wit.playlistmanager.models.playlist.PlaylistStore
+import org.wit.playlistmanager.models.song.SongModel
+
 var lastId = 0L
 
 internal fun getId(): Long {
@@ -19,9 +23,15 @@ class PlaylistMemStore : PlaylistStore {
     }
 
     override fun update(playlist: PlaylistModel) {
-        var foundPlaylist: PlaylistModel? = playlists.find { p -> p.id == playlist.id }
+        val foundPlaylist: PlaylistModel? = playlists.find { p -> p.id == playlist.id }
         if (foundPlaylist != null) {
             playlist.name =  playlist.name
         }
+    }
+
+    override fun addSongToPlaylist(playlist: PlaylistModel, song: SongModel) {
+        val foundPlaylist: PlaylistModel? = playlists.find { p -> p.id == playlist.id }
+        song.songId = getId()
+        foundPlaylist?.songs?.add(song)
     }
 }

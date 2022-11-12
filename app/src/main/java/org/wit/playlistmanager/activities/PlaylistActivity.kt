@@ -8,13 +8,13 @@ import com.google.android.material.snackbar.Snackbar
 import org.wit.playlistmanager.R
 import org.wit.playlistmanager.databinding.ActivityPlaylistBinding
 import org.wit.playlistmanager.main.MainApp
-import org.wit.playlistmanager.models.PlaylistModel
-import org.wit.playlistmanager.models.SongModel
+import org.wit.playlistmanager.models.playlist.PlaylistModel
+import org.wit.playlistmanager.models.song.SongModel
 
 class PlaylistActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlaylistBinding
 
-    var playlist = PlaylistModel(0,"", SongModel())
+    var playlist = PlaylistModel()
     lateinit var app: MainApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
