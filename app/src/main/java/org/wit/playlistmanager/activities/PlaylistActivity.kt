@@ -2,7 +2,10 @@ package org.wit.playlistmanager.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
+import org.wit.playlistmanager.R
 import org.wit.playlistmanager.databinding.ActivityPlaylistBinding
 import org.wit.playlistmanager.main.MainApp
 import org.wit.playlistmanager.models.PlaylistModel
@@ -19,6 +22,9 @@ class PlaylistActivity : AppCompatActivity() {
 
         binding = ActivityPlaylistBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.toolbarAdd.title = title
+        setSupportActionBar(binding.toolbarAdd)
 
         app = application as MainApp
 
@@ -39,5 +45,19 @@ class PlaylistActivity : AppCompatActivity() {
                     .show()
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_playlist, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_cancel -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

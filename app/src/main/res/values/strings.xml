@@ -8,4 +8,5 @@
     <string name="songWonAward">Did it win an award?</string>
     <string name="menu_addPlaylist">Add</string>
     <string name="playlistName">Name</string>
+    <string name="menu_cancelPlaylist">Cancel</string>
 </resources>

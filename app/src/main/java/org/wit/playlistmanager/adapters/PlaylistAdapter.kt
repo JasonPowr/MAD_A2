@@ -7,7 +7,7 @@ import org.wit.playlistmanager.databinding.CardPlaylistBinding
 import org.wit.playlistmanager.models.PlaylistModel
 
 interface PlaylistListener {
-    fun onPlaylistClick(playlist: PlaylistModel)
+    fun onEditButtonClick(playlist: PlaylistModel)
 }
 
 class PlaylistAdapter constructor(private var playlists: List<PlaylistModel>,
@@ -33,7 +33,8 @@ class PlaylistAdapter constructor(private var playlists: List<PlaylistModel>,
 
         fun bind(playlist: PlaylistModel, listener: PlaylistListener) {
             binding.playlistName.text = playlist.name
-            binding.root.setOnClickListener { listener.onPlaylistClick(playlist) }
+            binding.editPlaylistName.setOnClickListener {listener.onEditButtonClick(playlist)}
         }
+
     }
 }
