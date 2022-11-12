@@ -9,6 +9,7 @@ import org.wit.playlistmanager.models.playlist.PlaylistModel
 interface PlaylistListener {
     fun onEditButtonClick(playlist: PlaylistModel)
     fun onAddButtionClick(playlist: PlaylistModel)
+    fun onPlaylistClick(playlist: PlaylistModel)
 }
 
 class PlaylistAdapter constructor(private var playlists: List<PlaylistModel>,
@@ -36,6 +37,7 @@ class PlaylistAdapter constructor(private var playlists: List<PlaylistModel>,
             binding.playlistName.text = playlist.name
             val trueSize = playlist.songs.size -1
             binding.playlistCount.text = trueSize.toString()
+            binding.root.setOnClickListener { listener.onPlaylistClick(playlist) }
             binding.editPlaylistName.setOnClickListener {listener.onEditButtonClick(playlist)}
             binding.btnAdd.setOnClickListener{listener.onAddButtionClick(playlist)}
         }
