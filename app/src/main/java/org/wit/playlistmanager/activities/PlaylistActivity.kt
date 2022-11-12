@@ -28,37 +28,28 @@ class PlaylistActivity : AppCompatActivity() {
 
         app = application as MainApp
 
+        var edit = false
         if (intent.hasExtra("playlist_edit")) {
+            edit = true
             playlist = intent.extras?.getParcelable("playlist_edit")!!
             binding.playlistName.setText(playlist.name)
-
             binding.btnAdd.text = "Save"
-            binding.btnAdd.setOnClickListener() {
-                playlist.name = binding.playlistName.text.toString()
-                if (playlist.name.isNotEmpty()) {
-                    app.playlists.update(playlist.copy())
-                    setResult(RESULT_OK)
-                    finish()
-                }
-                else {
-                    Snackbar.make(it,"Please Enter a title", Snackbar.LENGTH_LONG)
-                        .show()
-                }
-            }
-
         }
 
         binding.btnAdd.setOnClickListener() {
             playlist.name = binding.playlistName.text.toString()
-            if (playlist.name.isNotEmpty()) {
-                app.playlists.create(playlist.copy())
-                setResult(RESULT_OK)
-                finish()
-            }
-            else {
-                Snackbar.make(it,"Please Enter a title", Snackbar.LENGTH_LONG)
+            if (playlist.name.isEmpty()) {
+                Snackbar.make(it,"Please enter a name", Snackbar.LENGTH_LONG)
                     .show()
+            } else {
+                if (edit) {
+                    app.playlists.update(playlist.copy())
+                } else {
+                    app.playlists.create(playlist.copy())
+                }
             }
+            setResult(RESULT_OK)
+            finish()
         }
     }
 

@@ -9,9 +9,8 @@ import org.wit.playlistmanager.models.song.SongModel
 class MainApp : Application() {
 
     val playlists = PlaylistMemStore()
-
     override fun onCreate() {
         super.onCreate()
-        playlists.create(PlaylistModel(0,"Pop", arrayListOf(SongModel())))
     }
+
 }
