@@ -32,6 +32,15 @@ class SongActivity : AppCompatActivity() {
 
         binding.btnAdd.setOnClickListener() {
             song.title = binding.songTitle.text.toString()
+            song.artist = binding.songArtist.text.toString()
+
+            val min = binding.songMinute.text.toString().toDouble()
+            val sec = binding.songSecond.text.toString().toDouble()
+            song.duration = min + sec
+            song.releaseYear = binding.songReleaseYear.text.toString().toInt()
+            song.wonAward = binding.songWonAward.isPressed
+
+
             if (song.title.isNotEmpty()) {
                 app.playlists.addSongToPlaylist(playlist,song.copy())
                 setResult(RESULT_OK)

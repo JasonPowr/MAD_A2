@@ -8,10 +8,11 @@ import org.wit.playlistmanager.databinding.CardSongBinding
 import org.wit.playlistmanager.models.song.SongModel
 
 interface SongListener {
+    fun onSongPressed(song: SongModel)
 }
 
 class SongAdapter(private var songs: ArrayList<SongModel>,
-                  private val listener: SongListActivity
+                  private val listener: SongListener
 ) :
     RecyclerView.Adapter<SongAdapter.MainHolder>() {
 
@@ -30,10 +31,10 @@ class SongAdapter(private var songs: ArrayList<SongModel>,
     class MainHolder(private val binding : CardSongBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(song: SongModel, listener: SongListActivity) {
+        fun bind(song: SongModel, listener: SongListener) {
             binding.songTitle.text = song.title
-
-//            binding.editPlaylistName.setOnClickListener {listener.onEditButtonClick(playlist)}
+            binding.songArtist.text = song.artist
+            binding.root.setOnClickListener { listener.onSongPressed(song) }
         }
 
     }
