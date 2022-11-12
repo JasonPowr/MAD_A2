@@ -23,7 +23,7 @@ class PlaylistActivity : AppCompatActivity() {
         binding = ActivityPlaylistBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolbarAdd.title = title
+        binding.toolbarAdd.title = "Add a Playlist"
         setSupportActionBar(binding.toolbarAdd)
 
         app = application as MainApp

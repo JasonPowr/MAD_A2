@@ -32,10 +32,8 @@ class SongAdapter(private var songs: ArrayList<SongModel>,
 
         fun bind(song: SongModel, listener: SongListActivity) {
             binding.songTitle.text = song.title
-//            val trueSize = playlist.songs.size -1
-//            binding.playlistCount.text = trueSize.toString()
+
 //            binding.editPlaylistName.setOnClickListener {listener.onEditButtonClick(playlist)}
-//            binding.btnAdd.setOnClickListener{listener.onAddButtionClick(playlist)}
         }
 
     }
