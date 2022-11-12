@@ -14,7 +14,6 @@ import org.wit.playlistmanager.adapters.PlaylistListener
 import org.wit.playlistmanager.databinding.ActivityPlaylistListBinding
 import org.wit.playlistmanager.main.MainApp
 import org.wit.playlistmanager.models.playlist.PlaylistModel
-import org.wit.playlistmanager.models.song.SongModel
 
 class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
     lateinit var app: MainApp
@@ -68,6 +67,12 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
     override fun onAddButtionClick(playlist: PlaylistModel) {
         val launcherIntent = Intent(this, SongActivity::class.java)
         launcherIntent.putExtra("playlist_add_song", playlist)
+        getClickResult.launch(launcherIntent)
+    }
+
+    override fun onPlaylistClick(playlist: PlaylistModel) {
+        val launcherIntent = Intent(this, SongListActivity::class.java)
+        launcherIntent.putExtra("song_list", playlist)
         getClickResult.launch(launcherIntent)
     }
 
