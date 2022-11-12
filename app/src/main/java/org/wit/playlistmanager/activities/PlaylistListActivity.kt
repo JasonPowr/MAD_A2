@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import org.wit.playlistmanager.R
 import org.wit.playlistmanager.adapters.PlaylistAdapter
 import org.wit.playlistmanager.adapters.PlaylistListener
@@ -42,7 +43,6 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
         return super.onCreateOptionsMenu(menu)
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_add -> {
@@ -63,7 +63,7 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
             }
         }
 
-    override fun onPlaylistClick(playlist: PlaylistModel) {
+    override fun onEditButtonClick(playlist: PlaylistModel) {
         val launcherIntent = Intent(this, PlaylistActivity::class.java)
         launcherIntent.putExtra("playlist_edit", playlist)
         getClickResult.launch(launcherIntent)
@@ -78,6 +78,4 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
                 notifyItemRangeChanged(0,app.playlists.findAll().size)
             }
         }
-
-
 }
