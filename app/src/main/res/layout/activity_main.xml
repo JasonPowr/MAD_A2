@@ -58,7 +58,10 @@
                     android:id="@+id/songArtist"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:layout_margin="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
                     android:autofillHints="hint"
                     android:hint="@string/songArtist"
                     android:inputType="text"
@@ -68,19 +71,47 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp" />
 
-                <EditText
-                    android:id="@+id/songDuration"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_margin="8dp"
-                    android:autofillHints="hint"
-                    android:hint="@string/songDuration"
-                    android:inputType="text"
-                    android:maxLength="25"
-                    android:maxLines="1"
-                    android:padding="8dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/songMinute"
+                        android:layout_width="100dp"
+                        android:layout_height="45dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="64dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:autofillHints="hint"
+                        android:hint="Minute"
+                        android:inputType="text"
+                        android:maxLength="25"
+                        android:maxLines="1"
+                        android:padding="8dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/songSecond"
+                        android:layout_width="100dp"
+                        android:layout_height="45dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="90dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="72dp"
+                        android:layout_marginBottom="8dp"
+                        android:hint="Second"
+                        android:inputType="text"
+                        android:maxLength="25"
+                        android:maxLines="1"
+                        android:padding="8dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="14sp"
+                        android:autofillHints="Seconds" />
+
+                </RelativeLayout>
 
                 <EditText
                     android:id="@+id/songReleaseYear"
@@ -96,19 +127,13 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp" />
 
-                <EditText
-                    android:id="@+id/songWonAward"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_margin="8dp"
-                    android:autofillHints="hint"
-                    android:hint="@string/songWonAward"
-                    android:inputType="text"
-                    android:maxLength="25"
-                    android:maxLines="1"
-                    android:padding="8dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/song_wonAward"
+                    android:layout_width="324dp"
+                    android:layout_height="71dp"
+                    android:gravity="center"
+                    android:text="Award Won"
+                    android:textSize="20sp"/>
 
                 <Button
                     android:id="@+id/btnAdd"
@@ -122,6 +147,7 @@
                     android:text="@string/button_addSong"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp" />
+
             </LinearLayout>
         </ScrollView>
 
