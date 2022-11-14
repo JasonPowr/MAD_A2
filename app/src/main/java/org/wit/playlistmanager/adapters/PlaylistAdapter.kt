@@ -1,10 +1,14 @@
 package org.wit.playlistmanager.adapters
 
+import android.R
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import org.wit.playlistmanager.databinding.CardPlaylistBinding
 import org.wit.playlistmanager.models.playlist.PlaylistModel
+
 
 interface PlaylistListener {
     fun onEditButtonClick(playlist: PlaylistModel)
@@ -37,6 +41,7 @@ class PlaylistAdapter constructor(private var playlists: List<PlaylistModel>,
             binding.playlistName.text = playlist.name
             val trueSize = playlist.songs.size -1
             binding.playlistCount.text = trueSize.toString()
+            binding.playlistImage.setImageURI(playlist.image)
             binding.root.setOnClickListener { listener.onPlaylistClick(playlist) }
             binding.editPlaylistName.setOnClickListener {listener.onEditButtonClick(playlist)}
             binding.btnAdd.setOnClickListener{listener.onAddButtionClick(playlist)}

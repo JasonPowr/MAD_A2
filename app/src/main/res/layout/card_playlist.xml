@@ -17,7 +17,7 @@
         tools:layout_editor_absoluteY="-38dp">
 
         <ImageView
-            android:id="@+id/placemarkImage"
+            android:id="@+id/playlistImage"
             android:layout_width="70dp"
             android:layout_height="56dp"
             android:layout_marginTop="4dp"
@@ -37,7 +37,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/placemarkImage"
+            app:layout_constraintStart_toEndOf="@+id/playlistImage"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="A Title" />
 
@@ -48,7 +48,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="30dp"
             android:textSize="15dp"
-            app:layout_constraintStart_toEndOf="@+id/placemarkImage"
+            app:layout_constraintStart_toEndOf="@+id/playlistImage"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="15" />
 

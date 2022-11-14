@@ -9,4 +9,5 @@
     <string name="menu_addPlaylist">Add</string>
     <string name="playlistName">Name</string>
     <string name="menu_cancelPlaylist">Cancel</string>
+    <string name="select_playlist_image">Select playlist image</string>
 </resources>
