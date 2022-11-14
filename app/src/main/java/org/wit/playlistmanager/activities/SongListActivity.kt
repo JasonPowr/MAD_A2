@@ -16,6 +16,7 @@ import org.wit.playlistmanager.models.song.SongModel
 class SongListActivity : AppCompatActivity(), SongListener {
     lateinit var app: MainApp
     private lateinit var binding: ActivitySongListBinding
+    var playlist = PlaylistModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +27,6 @@ class SongListActivity : AppCompatActivity(), SongListener {
 
         app = application as MainApp
 
-        var playlist = PlaylistModel()
         if (intent.hasExtra("song_list")) {
             playlist = intent.extras?.getParcelable("song_list")!!
         }
@@ -40,6 +40,7 @@ class SongListActivity : AppCompatActivity(), SongListener {
     override fun onSongPressed(song: SongModel) {
         val launcherIntent = Intent(this, SongInfoActivity::class.java)
         launcherIntent.putExtra("song_info", song)
+        launcherIntent.putExtra("playlist", playlist)
         getClickResult.launch(launcherIntent)
     }
 

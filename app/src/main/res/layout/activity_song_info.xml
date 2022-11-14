@@ -26,7 +26,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/playlistImage"
         android:layout_width="268dp"
         android:layout_height="271dp"
         android:layout_gravity="center_horizontal"

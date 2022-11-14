@@ -47,6 +47,7 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
     override fun onAddButtionClick(playlist: PlaylistModel) {
         val launcherIntent = Intent(this, SongActivity::class.java)
         launcherIntent.putExtra("playlist_add_song", playlist)
+        launcherIntent.putExtra("song", playlist.songs)
         getClickResult.launch(launcherIntent)
     }
 
