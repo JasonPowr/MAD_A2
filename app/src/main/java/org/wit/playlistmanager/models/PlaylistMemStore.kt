@@ -25,7 +25,8 @@ class PlaylistMemStore : PlaylistStore {
     override fun update(playlist: PlaylistModel) {
         val foundPlaylist: PlaylistModel? = playlists.find { p -> p.id == playlist.id }
         if (foundPlaylist != null) {
-            foundPlaylist.name =  playlist.name
+            foundPlaylist.name = playlist.name
+            foundPlaylist.image = playlist.image
         }
     }
 
