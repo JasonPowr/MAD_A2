@@ -43,6 +43,7 @@ class PlaylistActivity : AppCompatActivity() {
             playlist = intent.extras?.getParcelable("playlist_edit")!!
             binding.playlistName.setText(playlist.name)
             binding.btnAdd.text = "Save"
+            binding.btnAddImage.text = "Save Image"
 
             Picasso.get()
                 .load(playlist.image)
