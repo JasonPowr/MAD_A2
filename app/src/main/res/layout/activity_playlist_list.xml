@@ -26,7 +26,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerViewplaylist"
         android:layout_width="match_parent"
         android:layout_height="675dp"
         android:scrollbars="vertical"
@@ -40,7 +40,7 @@
         android:layout_marginBottom="50dp"
         android:clickable="true"
         android:contentDescription="TODO"
-        app:layout_anchor="@+id/recyclerView"
+        app:layout_anchor="@+id/recyclerViewplaylist"
         app:layout_anchorGravity="end|bottom"
         app:srcCompat="@android:drawable/ic_menu_add"
         app:fabCustomSize="71dp">

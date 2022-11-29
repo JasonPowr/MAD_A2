@@ -22,6 +22,7 @@ class SongInfoActivity : AppCompatActivity() {
 
         var song = SongModel()
         var playlist = PlaylistModel()
+
         if (intent.hasExtra("song_info")) {
             song = intent.extras?.getParcelable("song_info")!!
             playlist = intent.extras?.getParcelable("playlist")!!
@@ -35,6 +36,5 @@ class SongInfoActivity : AppCompatActivity() {
         binding.songDuration.text = song.duration.toString()
         binding.songReleaseYear.text = song.releaseYear.toString()
         binding.songWonAward.text = song.wonAward.toString()
-
     }
 }
