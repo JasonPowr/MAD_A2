@@ -1,23 +1,20 @@
 package org.wit.playlistmanager.activities
 
+import org.wit.playlistmanager.main.MainApp
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.wit.playlistmanager.R
 import org.wit.playlistmanager.adapters.PlaylistAdapter
 import org.wit.playlistmanager.adapters.PlaylistListener
 import org.wit.playlistmanager.databinding.ActivityPlaylistListBinding
-import org.wit.playlistmanager.main.MainApp
 import org.wit.playlistmanager.models.playlist.PlaylistModel
 
 class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
-    lateinit var app: MainApp
     private lateinit var binding: ActivityPlaylistListBinding
+    lateinit var app: MainApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +26,8 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
         app = application as MainApp
 
         val layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = PlaylistAdapter(app.playlists.findAll(), this)
+        binding.recyclerViewplaylist.layoutManager = layoutManager
+        binding.recyclerViewplaylist.adapter = PlaylistAdapter(app.playlists.findAll(), this)
 
         binding.addPlaylist.setOnClickListener{
             val launcherIntent = Intent(this, PlaylistActivity::class.java)
@@ -62,7 +59,7 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
-                (binding.recyclerView.adapter)?.
+                (binding.recyclerViewplaylist.adapter)?.
                 notifyItemRangeChanged(0,app.playlists.findAll().size)
             }
         }

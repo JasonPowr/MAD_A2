@@ -17,6 +17,10 @@ class PlaylistMemStore : PlaylistStore {
         return playlists
     }
 
+    override fun findAllSongs(playlist: PlaylistModel): List<SongModel> {
+        return playlist.songs
+    }
+
     override fun create(playlist: PlaylistModel) {
         playlist.id = getId()
         playlists.add(playlist)
@@ -35,4 +39,14 @@ class PlaylistMemStore : PlaylistStore {
         song.songId = getId()
         foundPlaylist?.songs?.add(song)
     }
+
+    override fun updateSongInPlaylist(playlist: PlaylistModel, song: SongModel) {
+        val foundPlaylist: PlaylistModel? = playlists.find { p -> p.id == playlist.id }
+        val foundSong: SongModel? = foundPlaylist?.songs?.find { s -> s.songId == song.songId }
+        if ((foundPlaylist != null) && (foundSong != null)) {
+            foundPlaylist.songs[foundPlaylist.songs.indexOf(foundSong)].title = song.title
+            foundPlaylist.songs[foundPlaylist.songs.indexOf(foundSong)].artist = song.artist
+        }
+    }
+
 }

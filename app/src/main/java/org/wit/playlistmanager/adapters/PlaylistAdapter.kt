@@ -1,10 +1,7 @@
 package org.wit.playlistmanager.adapters
 
-import android.R
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import org.wit.playlistmanager.databinding.CardPlaylistBinding
 import org.wit.playlistmanager.models.playlist.PlaylistModel
@@ -16,8 +13,9 @@ interface PlaylistListener {
     fun onPlaylistClick(playlist: PlaylistModel)
 }
 
-class PlaylistAdapter constructor(private var playlists: List<PlaylistModel>,
-                                  private val listener: PlaylistListener) :
+class PlaylistAdapter(private var playlists: List<PlaylistModel>,
+                      private val listener: PlaylistListener
+) :
     RecyclerView.Adapter<PlaylistAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {

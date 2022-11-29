@@ -7,4 +7,6 @@ interface PlaylistStore {
     fun create(playlist: PlaylistModel)
     fun update(playlist: PlaylistModel)
     fun addSongToPlaylist(playlist: PlaylistModel, song: SongModel)
+    fun updateSongInPlaylist(playlist: PlaylistModel, song: SongModel)
+    fun findAllSongs(playlist: PlaylistModel): List<SongModel>
 }

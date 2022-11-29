@@ -1,5 +1,4 @@
 package org.wit.playlistmanager.activities
-
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -29,12 +28,12 @@ class SongListActivity : AppCompatActivity(), SongListener {
 
         if (intent.hasExtra("song_list")) {
             playlist = intent.extras?.getParcelable("song_list")!!
+            playlist.songs.removeAt(0)
         }
 
-        playlist.songs.removeAt(0)
         val layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = SongAdapter(playlist.songs,this)
+        binding.recyclerViewSong.layoutManager = layoutManager
+        binding.recyclerViewSong.adapter = SongAdapter(app.playlists.findAllSongs(playlist),this, playlist)
     }
 
     override fun onSongPressed(song: SongModel) {
@@ -44,13 +43,21 @@ class SongListActivity : AppCompatActivity(), SongListener {
         getClickResult.launch(launcherIntent)
     }
 
+    override fun onEditButtonPressed(song: SongModel) {
+        val launcherIntent = Intent(this, SongActivity::class.java)
+        launcherIntent.putExtra("song_edit", song)
+        launcherIntent.putExtra("song_edit_playlist", playlist)
+        getClickResult.launch(launcherIntent)
+    }
+
     private val getClickResult =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
-                (binding.recyclerView.adapter)?.
+                (binding.recyclerViewSong.adapter)?.
                 notifyItemRangeChanged(0,app.playlists.findAll().size)
             }
         }
+
 }

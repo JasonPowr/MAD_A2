@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="100dp"
     android:layout_marginBottom="8dp"
     android:elevation="24dp">
 
@@ -23,8 +23,7 @@
             android:layout_marginTop="4dp"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Knights of Cydonia" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/songArtist"
@@ -34,8 +33,33 @@
             android:layout_marginTop="30dp"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/edit_song"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            app:fabCustomSize="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Muse" />
+            app:srcCompat="@android:drawable/ic_menu_edit" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/songDelete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="44dp"
+            android:clickable="true"
+            app:fabCustomSize="40dp"
+            app:layout_constraintBottom_toTopOf="@+id/songTitle"
+            app:layout_constraintEnd_toStartOf="@+id/edit_song"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@android:drawable/ic_menu_delete" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
