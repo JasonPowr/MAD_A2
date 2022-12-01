@@ -29,7 +29,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewplaylist"
         android:layout_width="match_parent"
-        android:layout_height="675dp"
+        android:layout_height="671dp"
         android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
@@ -47,6 +47,16 @@
         app:fabCustomSize="71dp">
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+    <TextView
+        android:id="@+id/emptyMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nothing to see here....\nstart by adding a playlist"
+        android:textAlignment="center"
+        app:layout_anchor="@+id/recyclerViewplaylist"
+        app:layout_anchorGravity="center"
+        />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -2,7 +2,9 @@ package org.wit.playlistmanager.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
+import android.view.ActionMode
 import android.view.Menu
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -36,13 +38,17 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
         binding.addPlaylist.setOnClickListener{
             val launcherIntent = Intent(this, PlaylistActivity::class.java)
             getClickResult.launch(launcherIntent)
+            binding.emptyMessage.text = ""
+        }
+
+        if (app.playlists.findAll().isNotEmpty()){
+            binding.emptyMessage.text = ""
         }
     }
 
     fun filter(filteredNames: List<PlaylistModel>){
         binding.recyclerViewplaylist.adapter = PlaylistAdapter(filteredNames,this)
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
@@ -85,6 +91,10 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
     override fun onDeleteButtonClick(playlist: PlaylistModel) {
         app.playlists.delete(playlist)
         binding.recyclerViewplaylist.adapter = PlaylistAdapter(app.playlists.findAll(), this)
+
+        if(app.playlists.findAll().isEmpty()){
+            binding.emptyMessage.text = "Nothing to see here....\nstart by adding a playlist"
+        }
     }
 
     private val getClickResult =

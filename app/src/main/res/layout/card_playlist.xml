@@ -32,25 +32,14 @@
 
         <TextView
             android:id="@+id/playlistName"
-            android:layout_width="51dp"
-            android:layout_height="23dp"
+            android:layout_width="125dp"
+            android:layout_height="58dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/playlistImage"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="A Title" />
-
-        <TextView
-            android:id="@+id/playlistCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="30dp"
-            android:textSize="15dp"
-            app:layout_constraintStart_toEndOf="@+id/playlistImage"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="15" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnAdd"
