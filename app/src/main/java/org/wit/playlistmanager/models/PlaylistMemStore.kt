@@ -33,6 +33,16 @@ class PlaylistMemStore : PlaylistStore {
         return filteredList
     }
 
+    override fun filterSongTitles(songTitle: String, playlist: PlaylistModel): List<SongModel> {
+        val songs = findAllSongs(playlist)
+        val filteredList = mutableListOf<SongModel>()
+        for(song in songs){
+            if(song.title.toLowerCase(Locale.ROOT).contains(songTitle.toLowerCase()))
+                filteredList.add(song)
+        }
+        return filteredList
+    }
+
     override fun create(playlist: PlaylistModel) {
         playlist.id = getId()
         playlists.add(playlist)

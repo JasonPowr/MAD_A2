@@ -1,17 +1,11 @@
 package org.wit.playlistmanager.adapters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import org.wit.playlistmanager.R
 import org.wit.playlistmanager.databinding.CardPlaylistBinding
 import org.wit.playlistmanager.models.playlist.PlaylistModel
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 interface PlaylistListener {
