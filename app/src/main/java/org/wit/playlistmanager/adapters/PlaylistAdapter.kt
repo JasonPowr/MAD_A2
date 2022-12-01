@@ -1,9 +1,12 @@
 package org.wit.playlistmanager.adapters
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import org.wit.playlistmanager.R
+import org.wit.playlistmanager.databinding.ActivityPlaylistListBinding
 import org.wit.playlistmanager.databinding.CardPlaylistBinding
 import org.wit.playlistmanager.models.playlist.PlaylistModel
 
@@ -19,12 +22,11 @@ class PlaylistAdapter(private var playlists: List<PlaylistModel>,
                       private val listener: PlaylistListener
 ) :
     RecyclerView.Adapter<PlaylistAdapter.MainHolder>(){
+    private lateinit var binding: ActivityPlaylistListBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
-        val binding = CardPlaylistBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
-
-        return MainHolder(binding)
+        val CardBinding = CardPlaylistBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MainHolder(CardBinding)
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
@@ -34,14 +36,18 @@ class PlaylistAdapter(private var playlists: List<PlaylistModel>,
 
     override fun getItemCount(): Int = playlists.size
 
-    class MainHolder(private val binding : CardPlaylistBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+
+    class MainHolder(private val binding : CardPlaylistBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(playlist: PlaylistModel, listener: PlaylistListener) {
             binding.playlistName.text = playlist.name
-            val trueSize = playlist.songs.size -1
-            binding.playlistCount.text = trueSize.toString()
-            Picasso.get().load(playlist.image).into(binding.playlistImage)
+
+            if(playlist.image == Uri.EMPTY){
+                binding.playlistImage.setImageResource(R.drawable.placeholder);
+            }else {
+                Picasso.get().load(playlist.image).into(binding.playlistImage)
+            }
+
             binding.root.setOnClickListener { listener.onPlaylistClick(playlist) }
             binding.editPlaylistName.setOnClickListener {listener.onEditButtonClick(playlist)}
             binding.btnAdd.setOnClickListener{listener.onAddButtionClick(playlist)}

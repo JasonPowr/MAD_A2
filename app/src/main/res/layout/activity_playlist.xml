@@ -54,6 +54,13 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp" />
 
+                <ImageView
+                    android:id="@+id/edit_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:srcCompat="@tools:sample/avatars"
+                    android:contentDescription="TODO" />
+
                 <Button
                     android:id="@+id/btnAddImage"
                     android:layout_width="match_parent"
@@ -79,6 +86,7 @@
                     android:text="@string/menu_addPlaylist"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp" />
+
             </LinearLayout>
         </ScrollView>
 

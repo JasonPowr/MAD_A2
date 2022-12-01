@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/item_cancel"
-        android:title="@string/menu_cancelPlaylist"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
         app:showAsAction="always" />
 
 </menu>

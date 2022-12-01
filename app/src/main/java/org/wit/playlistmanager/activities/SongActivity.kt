@@ -13,6 +13,7 @@ class SongActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     lateinit var app: MainApp
     var song = SongModel()
+
     var playlist = PlaylistModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {

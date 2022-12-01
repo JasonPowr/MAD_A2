@@ -14,6 +14,7 @@ import org.wit.playlistmanager.databinding.ActivityPlaylistBinding
 import org.wit.playlistmanager.helpers.showImagePicker
 import org.wit.playlistmanager.main.MainApp
 import org.wit.playlistmanager.models.playlist.PlaylistModel
+import org.wit.playlistmanager.models.song.SongModel
 
 
 class PlaylistActivity : AppCompatActivity() {
@@ -40,14 +41,17 @@ class PlaylistActivity : AppCompatActivity() {
             playlist = intent.extras?.getParcelable("playlist_edit")!!
             binding.playlistName.setText(playlist.name)
             binding.btnAdd.text = "Save"
-            binding.btnAddImage.text = "Save Image"
-
+            binding.btnAddImage.text = "Edit Image"
+            binding.toolbarAdd.title = "Edit "+playlist.name
             Picasso.get()
                 .load(playlist.image)
+                .resize(300,300)
+                .into(binding.editImage)
         }
 
         binding.btnAdd.setOnClickListener() {
             playlist.name = binding.playlistName.text.toString()
+            playlist.songs.removeAll(listOf(SongModel()).toSet())
             if (playlist.name.isEmpty()) {
                 Snackbar.make(it,"Please enter a name", Snackbar.LENGTH_LONG)
                     .show()
@@ -92,7 +96,6 @@ class PlaylistActivity : AppCompatActivity() {
                             contentResolver.takePersistableUriPermission(image,
                                 Intent.FLAG_GRANT_READ_URI_PERMISSION)
                             playlist.image = image
-
                             Picasso.get()
                                 .load(playlist.image)
                             binding.btnAddImage.setText(R.string.select_playlist_image)

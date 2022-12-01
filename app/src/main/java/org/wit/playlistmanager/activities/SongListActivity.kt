@@ -20,7 +20,7 @@ import org.wit.playlistmanager.models.song.SongModel
 class SongListActivity : AppCompatActivity(), SongListener {
     lateinit var app: MainApp
     private lateinit var binding: ActivitySongListBinding
-    var playlist = PlaylistModel()
+    lateinit var playlist: PlaylistModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +33,9 @@ class SongListActivity : AppCompatActivity(), SongListener {
 
         if (intent.hasExtra("song_list")) {
             playlist = intent.extras?.getParcelable("song_list")!!
+            if (app.playlists.findAllSongs(playlist).isNotEmpty()){
+                binding.emptyMessage.text = ""
+            }
         }
 
         val layoutManager = LinearLayoutManager(this)
@@ -82,6 +85,10 @@ class SongListActivity : AppCompatActivity(), SongListener {
         app.playlists.deleteSongFromPlaylist(song, playlist)
         val newPlaylist = app.playlists.getPlaylistById(playlist.id)
         binding.recyclerViewSong.adapter = SongAdapter(app.playlists.findAllSongs(newPlaylist!!),this)
+
+        if (newPlaylist.songs.size == 0){
+            binding.emptyMessage.text = "No Songs found...\n start by adding some"
+        }
     }
 
     private val getClickResult =
