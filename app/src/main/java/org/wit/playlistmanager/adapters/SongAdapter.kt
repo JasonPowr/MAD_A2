@@ -11,6 +11,7 @@ import org.wit.playlistmanager.models.song.SongModel
 interface SongListener {
     fun onSongPressed(song: SongModel)
     fun onEditButtonPressed(song: SongModel)
+    fun onDeleteButtonPressed(song: SongModel)
 }
 
 class SongAdapter(private var songs: List<SongModel>,
@@ -39,6 +40,7 @@ class SongAdapter(private var songs: List<SongModel>,
             binding.songArtist.text = song.artist
             binding.root.setOnClickListener { listener.onSongPressed(song) }
             binding.editSong.setOnClickListener { listener.onEditButtonPressed(song) }
+            binding.songDelete.setOnClickListener { listener.onDeleteButtonPressed(song) }
         }
     }
 }

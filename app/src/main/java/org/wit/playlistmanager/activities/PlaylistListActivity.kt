@@ -82,6 +82,11 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
         getClickResult.launch(launcherIntent)
     }
 
+    override fun onDeleteButtonClick(playlist: PlaylistModel) {
+        app.playlists.delete(playlist)
+        binding.recyclerViewplaylist.adapter = PlaylistAdapter(app.playlists.findAll(), this)
+    }
+
     private val getClickResult =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()

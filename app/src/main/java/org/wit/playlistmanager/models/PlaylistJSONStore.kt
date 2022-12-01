@@ -48,13 +48,40 @@ class PlaylistJSONStore(private val context: Context) : PlaylistStore {
         if (foundPlaylist != null) {
             foundPlaylist.name = playlist.name
             foundPlaylist.image = playlist.image
+            serialize()
         }
+    }
+
+    override fun delete(playlist: PlaylistModel) {
+        playlists.remove(playlist)
+        serialize()
+    }
+
+    override fun deleteSongFromPlaylist(song: SongModel, playlist: PlaylistModel) {
+        val foundPlaylist: PlaylistModel? = playlists.find { p -> p.id == playlist.id }
+        val foundSong: SongModel? = foundPlaylist?.songs?.find { s -> s.songId == song.songId }
+        if ((foundPlaylist != null) && (foundSong != null)) {
+            foundPlaylist.songs.remove(foundSong)
+            serialize()
+        }
+        print(foundPlaylist)
+    }
+
+    override fun getPlaylistById(id: Long): PlaylistModel? {
+        playlists = findAll()
+        for(playlist in playlists){
+            if (playlist.id == id){
+                return playlist
+            }
+        }
+        return null
     }
 
     override fun addSongToPlaylist(playlist: PlaylistModel, song: SongModel) {
         val foundPlaylist: PlaylistModel? = playlists.find { p -> p.id == playlist.id }
-        song.songId = getId()
+        song.songId = generateRandomId()
         foundPlaylist?.songs?.add(song)
+        serialize()
     }
 
     override fun updateSongInPlaylist(playlist: PlaylistModel, song: SongModel) {
@@ -63,6 +90,7 @@ class PlaylistJSONStore(private val context: Context) : PlaylistStore {
         if ((foundPlaylist != null) && (foundSong != null)) {
             foundPlaylist.songs[foundPlaylist.songs.indexOf(foundSong)].title = song.title
             foundPlaylist.songs[foundPlaylist.songs.indexOf(foundSong)].artist = song.artist
+            serialize()
         }
     }
 
