@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.wit.playlistmanager.R
+import org.wit.playlistmanager.adapters.PlaylistAdapter
 import org.wit.playlistmanager.adapters.SongAdapter
 import org.wit.playlistmanager.adapters.SongListener
 import org.wit.playlistmanager.databinding.ActivitySongListBinding
@@ -39,19 +41,29 @@ class SongListActivity : AppCompatActivity(), SongListener {
         binding.recyclerViewSong.adapter = SongAdapter(app.playlists.findAllSongs(playlist),this)
     }
 
+    fun filter(filteredTitles: List<SongModel>){
+        binding.recyclerViewSong.adapter = SongAdapter(filteredTitles, this)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
+        val menuSearchItem = menu.findItem(R.id.search)
+        val searchView = menuSearchItem.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(query: String): Boolean {
+                filter(app.playlists.filterSongTitles(query, playlist))
+                return true
+            }
+        })
+
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.search -> {
-                print("hello")
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
     override fun onSongPressed(song: SongModel) {
         val launcherIntent = Intent(this, SongInfoActivity::class.java)

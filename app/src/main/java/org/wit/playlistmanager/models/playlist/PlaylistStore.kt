@@ -11,4 +11,5 @@ interface PlaylistStore {
     fun findAllPlaylistNames(): ArrayList<String>
     fun findAllSongs(playlist: PlaylistModel): List<SongModel>
     fun filterPlaylistNames(playListName: String): List<PlaylistModel>
+    fun filterSongTitles(songTitle: String, playlist: PlaylistModel): List<SongModel>
 }
