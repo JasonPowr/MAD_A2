@@ -1,6 +1,7 @@
 package org.wit.playlistmanager.activities
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log.i
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
@@ -61,7 +62,7 @@ class PlaylistActivity : AppCompatActivity() {
             finish()
         }
         binding.btnAddImage.setOnClickListener {
-            showImagePicker(imageIntentLauncher)
+            showImagePicker(imageIntentLauncher,this)
         }
         registerImagePickerCallback()
     }
@@ -87,11 +88,15 @@ class PlaylistActivity : AppCompatActivity() {
                 when(result.resultCode){
                     RESULT_OK -> {
                         if (result.data != null) {
-                            //i("Got Result ${result.data!!.data}")
-                            playlist.image = result.data!!.data!!
+                            val image = result.data!!.data!!
+                            contentResolver.takePersistableUriPermission(image,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            playlist.image = image
+
                             Picasso.get()
                                 .load(playlist.image)
-                        }
+                            binding.btnAddImage.setText(R.string.select_playlist_image)
+                        } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }
                 }
