@@ -14,8 +14,7 @@ interface SongListener {
 }
 
 class SongAdapter(private var songs: List<SongModel>,
-                  private val listener: SongListener,
-                   private var playlist: PlaylistModel) :
+                  private val listener: SongListener) :
     RecyclerView.Adapter<SongAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -27,7 +26,7 @@ class SongAdapter(private var songs: List<SongModel>,
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val song = songs[holder.adapterPosition]
-        holder.bind(song,listener,playlist)
+        holder.bind(song,listener)
     }
 
     override fun getItemCount(): Int = songs.size
@@ -35,7 +34,7 @@ class SongAdapter(private var songs: List<SongModel>,
     class MainHolder(private val binding : CardSongBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(song: SongModel, listener: SongListener, playlist: PlaylistModel) {
+        fun bind(song: SongModel, listener: SongListener) {
             binding.songTitle.text = song.title
             binding.songArtist.text = song.artist
             binding.root.setOnClickListener { listener.onSongPressed(song) }

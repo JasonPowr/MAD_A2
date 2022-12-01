@@ -3,6 +3,8 @@ package org.wit.playlistmanager.models
 import org.wit.playlistmanager.models.playlist.PlaylistModel
 import org.wit.playlistmanager.models.playlist.PlaylistStore
 import org.wit.playlistmanager.models.song.SongModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 var lastId = 0L
 
@@ -19,6 +21,16 @@ class PlaylistMemStore : PlaylistStore {
 
     override fun findAllSongs(playlist: PlaylistModel): List<SongModel> {
         return playlist.songs
+    }
+
+    override fun filterPlaylistNames(playListName: String): List<PlaylistModel> {
+       val playlists = findAll()
+       val filteredList = mutableListOf<PlaylistModel>()
+        for(playlist in playlists){
+            if(playlist.name.toLowerCase(Locale.ROOT).contains(playListName.toLowerCase()))
+                filteredList.add(playlist)
+        }
+        return filteredList
     }
 
     override fun create(playlist: PlaylistModel) {
@@ -47,6 +59,14 @@ class PlaylistMemStore : PlaylistStore {
             foundPlaylist.songs[foundPlaylist.songs.indexOf(foundSong)].title = song.title
             foundPlaylist.songs[foundPlaylist.songs.indexOf(foundSong)].artist = song.artist
         }
+    }
+
+    override fun findAllPlaylistNames(): ArrayList<String> {
+        val playlistNames = ArrayList<String>()
+        for(playlist in playlists){
+            playlistNames.add(playlist.name)
+        }
+        return  playlistNames
     }
 
 }

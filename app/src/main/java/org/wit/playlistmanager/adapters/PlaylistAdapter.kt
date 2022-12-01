@@ -1,13 +1,21 @@
 package org.wit.playlistmanager.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
+import org.wit.playlistmanager.R
 import org.wit.playlistmanager.databinding.CardPlaylistBinding
 import org.wit.playlistmanager.models.playlist.PlaylistModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 interface PlaylistListener {
+
     fun onEditButtonClick(playlist: PlaylistModel)
     fun onAddButtionClick(playlist: PlaylistModel)
     fun onPlaylistClick(playlist: PlaylistModel)
@@ -16,7 +24,7 @@ interface PlaylistListener {
 class PlaylistAdapter(private var playlists: List<PlaylistModel>,
                       private val listener: PlaylistListener
 ) :
-    RecyclerView.Adapter<PlaylistAdapter.MainHolder>() {
+    RecyclerView.Adapter<PlaylistAdapter.MainHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         val binding = CardPlaylistBinding
@@ -39,7 +47,7 @@ class PlaylistAdapter(private var playlists: List<PlaylistModel>,
             binding.playlistName.text = playlist.name
             val trueSize = playlist.songs.size -1
             binding.playlistCount.text = trueSize.toString()
-            binding.playlistImage.setImageURI(playlist.image)
+            Picasso.get().load(playlist.image).into(binding.playlistImage)
             binding.root.setOnClickListener { listener.onPlaylistClick(playlist) }
             binding.editPlaylistName.setOnClickListener {listener.onEditButtonClick(playlist)}
             binding.btnAdd.setOnClickListener{listener.onAddButtionClick(playlist)}

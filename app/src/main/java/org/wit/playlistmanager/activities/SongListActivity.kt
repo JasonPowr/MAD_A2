@@ -3,8 +3,11 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.wit.playlistmanager.R
 import org.wit.playlistmanager.adapters.SongAdapter
 import org.wit.playlistmanager.adapters.SongListener
 import org.wit.playlistmanager.databinding.ActivitySongListBinding
@@ -33,7 +36,21 @@ class SongListActivity : AppCompatActivity(), SongListener {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerViewSong.layoutManager = layoutManager
-        binding.recyclerViewSong.adapter = SongAdapter(app.playlists.findAllSongs(playlist),this, playlist)
+        binding.recyclerViewSong.adapter = SongAdapter(app.playlists.findAllSongs(playlist),this)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_search, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.search -> {
+                print("hello")
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onSongPressed(song: SongModel) {
