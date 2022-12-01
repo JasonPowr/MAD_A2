@@ -9,10 +9,10 @@ import org.wit.playlistmanager.models.playlist.PlaylistModel
 
 
 interface PlaylistListener {
-
     fun onEditButtonClick(playlist: PlaylistModel)
     fun onAddButtionClick(playlist: PlaylistModel)
     fun onPlaylistClick(playlist: PlaylistModel)
+    fun onDeleteButtonClick(playlist: PlaylistModel)
 }
 
 class PlaylistAdapter(private var playlists: List<PlaylistModel>,
@@ -45,6 +45,7 @@ class PlaylistAdapter(private var playlists: List<PlaylistModel>,
             binding.root.setOnClickListener { listener.onPlaylistClick(playlist) }
             binding.editPlaylistName.setOnClickListener {listener.onEditButtonClick(playlist)}
             binding.btnAdd.setOnClickListener{listener.onAddButtionClick(playlist)}
+            binding.playlistDelete.setOnClickListener{listener.onDeleteButtonClick(playlist)}
         }
 
     }

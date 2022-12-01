@@ -33,7 +33,6 @@ class SongListActivity : AppCompatActivity(), SongListener {
 
         if (intent.hasExtra("song_list")) {
             playlist = intent.extras?.getParcelable("song_list")!!
-            playlist.songs.removeAt(0)
         }
 
         val layoutManager = LinearLayoutManager(this)
@@ -77,6 +76,12 @@ class SongListActivity : AppCompatActivity(), SongListener {
         launcherIntent.putExtra("song_edit", song)
         launcherIntent.putExtra("song_edit_playlist", playlist)
         getClickResult.launch(launcherIntent)
+    }
+
+    override fun onDeleteButtonPressed(song: SongModel) {
+        app.playlists.deleteSongFromPlaylist(song, playlist)
+        val newPlaylist = app.playlists.getPlaylistById(playlist.id)
+        binding.recyclerViewSong.adapter = SongAdapter(app.playlists.findAllSongs(newPlaylist!!),this)
     }
 
     private val getClickResult =
