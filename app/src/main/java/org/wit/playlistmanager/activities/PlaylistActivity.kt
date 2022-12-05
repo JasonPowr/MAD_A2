@@ -1,7 +1,7 @@
 package org.wit.playlistmanager.activities
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log.i
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
@@ -43,16 +43,23 @@ class PlaylistActivity : AppCompatActivity() {
             binding.btnAdd.text = "Save"
             binding.btnAddImage.text = "Edit Image"
             binding.toolbarAdd.title = "Edit "+playlist.name
-            Picasso.get()
-                .load(playlist.image)
-                .resize(300,300)
-                .into(binding.editImage)
+
+            if(playlist.image == Uri.EMPTY){
+                binding.editImage.layoutParams.height = 300;
+                binding.editImage.layoutParams.width = 300;
+                binding.editImage.setImageResource(R.drawable.placeholder)
+                //https://stackoverflow.com/questions/3144940/set-imageview-width-and-height-programmatically
+            }else {
+                Picasso.get().load(playlist.image).resize(300,300).into(binding.editImage)
+            }
         }
 
         binding.btnAdd.setOnClickListener() {
             playlist.name = binding.playlistName.text.toString()
-            playlist.songs.removeAll(listOf(SongModel()).toSet())
-            if (playlist.name.isEmpty()) {
+            if(playlist.songs.isNotEmpty()){
+                playlist.songs.removeAll(listOf(SongModel()).toSet())
+            }
+            if (binding.playlistName.text.toString().isEmpty()) {
                 Snackbar.make(it,"Please enter a name", Snackbar.LENGTH_LONG)
                     .show()
             } else {
@@ -60,10 +67,10 @@ class PlaylistActivity : AppCompatActivity() {
                     app.playlists.update(playlist.copy())
                 } else {
                     app.playlists.create(playlist.copy())
+                    setResult(RESULT_OK)
+                    finish()
                 }
             }
-            setResult(RESULT_OK)
-            finish()
         }
         binding.btnAddImage.setOnClickListener {
             showImagePicker(imageIntentLauncher,this)

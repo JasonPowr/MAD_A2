@@ -90,6 +90,10 @@ class PlaylistJSONStore(private val context: Context) : PlaylistStore {
         if ((foundPlaylist != null) && (foundSong != null)) {
             foundPlaylist.songs[foundPlaylist.songs.indexOf(foundSong)].title = song.title
             foundPlaylist.songs[foundPlaylist.songs.indexOf(foundSong)].artist = song.artist
+            foundPlaylist.songs[foundPlaylist.songs.indexOf(foundSong)].durationMin = song.durationMin
+            foundPlaylist.songs[foundPlaylist.songs.indexOf(foundSong)].durationSec = song.durationSec
+            foundPlaylist.songs[foundPlaylist.songs.indexOf(foundSong)].releaseYear = song.releaseYear
+            foundPlaylist.songs[foundPlaylist.songs.indexOf(foundSong)].wonAward = song.wonAward
             serialize()
         }
     }
