@@ -9,6 +9,7 @@ import org.wit.playlistmanager.main.MainApp
 import org.wit.playlistmanager.models.playlist.PlaylistModel
 import org.wit.playlistmanager.models.song.SongModel
 
+
 class SongActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     lateinit var app: MainApp
@@ -38,25 +39,53 @@ class SongActivity : AppCompatActivity() {
             binding.toolbarAdd.title = "Update Song"
             binding.songTitle.setText(song.title)
             binding.songArtist.setText(song.artist)
+            binding.songMinute.setText(song.durationMin.toString())
+            binding.songSecond.setText(song.durationSec.toString())
+            binding.songReleaseYear.setText(song.releaseYear.toString())
+
+            binding.songWonAward.isChecked = song.wonAward
+            binding.songWonAward.setOnCheckedChangeListener { _, isChecked ->
+                song.wonAward = isChecked
+            }
+            //https://www.geeksforgeeks.org/switch-in-kotlin/
         }
 
+        binding.songWonAward.setOnCheckedChangeListener { _, isChecked ->
+            song.wonAward = isChecked
+        }
+        //https://www.geeksforgeeks.org/switch-in-kotlin/
+
         binding.btnAdd.setOnClickListener() {
-            song.title = binding.songTitle.text.toString()
-            song.artist = binding.songArtist.text.toString()
-            if (song.title.isEmpty()) {
-                Snackbar.make(it, "Please Enter a title", Snackbar.LENGTH_LONG)
+
+            if (binding.songTitle.text.toString().isEmpty() || binding.songArtist.text.toString().isEmpty()) {
+                Snackbar.make(it, "Song Title and Song artist is required", Snackbar.LENGTH_LONG)
                     .show()
-            } else {
+           }
+            else if(binding.songMinute.text.toString().toIntOrNull() == null || binding.songSecond.text.toString().toIntOrNull() == null || binding.songReleaseYear.text.toString().toIntOrNull() == null){
+                Snackbar.make(it, "Please enter a number for Minutes, Seconds or the release year", Snackbar.LENGTH_LONG)
+                    .show()
+            }
+            else if(binding.songSecond.text.toString().toInt() > 60){
+                Snackbar.make(it, "Seconds cannot be greater than 60", Snackbar.LENGTH_LONG)
+                    .show()
+            }
+            else {
                 if (edit) {
                     app.playlists.updateSongInPlaylist(playlist, song.copy())
                     val launcherIntent = Intent(this, PlaylistListActivity::class.java)
                     startActivity(launcherIntent)
                 }else{
+                    song.title = binding.songTitle.text.toString()
+                    song.artist = binding.songArtist.text.toString()
+                    song.durationMin = binding.songMinute.text.toString().toInt()
+                    song.durationSec = binding.songSecond.text.toString().toInt()
+                    song.releaseYear = binding.songReleaseYear.text.toString().toInt()
+
                     app.playlists.addSongToPlaylist(playlist, song.copy())
+                    setResult(RESULT_OK)
+                    finish()
                 }
             }
-            setResult(RESULT_OK)
-            finish()
         }
 
     }

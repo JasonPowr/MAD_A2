@@ -43,11 +43,10 @@ class PlaylistAdapter(private var playlists: List<PlaylistModel>,
             binding.playlistName.text = playlist.name
 
             if(playlist.image == Uri.EMPTY){
-                binding.playlistImage.setImageResource(R.drawable.placeholder);
+                binding.playlistImage.setImageResource(R.drawable.placeholder)
             }else {
                 Picasso.get().load(playlist.image).into(binding.playlistImage)
             }
-
             binding.root.setOnClickListener { listener.onPlaylistClick(playlist) }
             binding.editPlaylistName.setOnClickListener {listener.onEditButtonClick(playlist)}
             binding.btnAdd.setOnClickListener{listener.onAddButtionClick(playlist)}
