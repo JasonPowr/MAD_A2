@@ -5,19 +5,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.navigation.NavigationView
 import org.wit.playlistmanager.R
 import org.wit.playlistmanager.adapters.PlaylistAdapter
 import org.wit.playlistmanager.adapters.PlaylistListener
 import org.wit.playlistmanager.databinding.ActivityPlaylistListBinding
 import org.wit.playlistmanager.main.MainApp
 import org.wit.playlistmanager.models.playlist.PlaylistModel
+import org.wit.playlistmanager.models.song.Location
 
 
 class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
@@ -25,6 +26,7 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
     lateinit var app: MainApp
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,11 +45,18 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
         actionBarDrawerToggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        registerMapCallback()
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_playlists -> {
                     val launcherIntent = Intent(this, PlaylistListActivity::class.java) //https://androidgeek.co/navigation-drawer-and-drawer-layout-in-kotlin-in-depth-guide-103ce411416d
                     startActivity(launcherIntent)
+                    true
+                }
+                R.id.nav_maps -> {
+                    val locations = app.playlists.returnAllSongLocations()
+                    val launcherIntent = Intent(this, MapActivity::class.java).putExtra("locations", locations)
+                    mapIntentLauncher.launch(launcherIntent)
                     true
                 }
                 else -> {false}
@@ -68,6 +77,19 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
             binding.emptyMessage.text = ""
         }
     }
+
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
+
 
     fun filter(filteredNames: List<PlaylistModel>){
         binding.recyclerViewplaylist.adapter = PlaylistAdapter(filteredNames,this)
