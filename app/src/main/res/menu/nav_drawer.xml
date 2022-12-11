@@ -8,6 +8,10 @@
         android:title="Your Playlists" />
 
     <item
+        android:id="@+id/nav_maps"
+        android:title="Map of song Stores" />
+
+    <item
         android:id="@+id/nav_settings"
         android:title="Settings" />
 

@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken
 import org.wit.playlistmanager.helpers.*
 import org.wit.playlistmanager.models.playlist.PlaylistModel
 import org.wit.playlistmanager.models.playlist.PlaylistStore
+import org.wit.playlistmanager.models.song.Location
 import org.wit.playlistmanager.models.song.SongModel
 import java.lang.reflect.Type
 import java.util.*
@@ -75,6 +76,24 @@ class PlaylistJSONStore(private val context: Context) : PlaylistStore {
             }
         }
         return null
+    }
+
+    override fun returnAllSongLocations(): ArrayList<Location> {
+        playlists = findAll()
+
+        var location: Location
+        val locations = arrayListOf<Location>()
+
+        for(playlist in playlists){
+            for(song in playlist.songs) {
+                val songLat = song.lat
+                val songLng = song.lng
+                val songZoom = song.zoom
+                location = Location(songLat, songLng, songZoom)
+                locations.add(location)
+            }
+        }
+        return locations
     }
 
     override fun addSongToPlaylist(playlist: PlaylistModel, song: SongModel) {

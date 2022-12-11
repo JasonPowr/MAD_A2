@@ -23,28 +23,51 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback,
     private lateinit var map: GoogleMap
     private lateinit var binding: ActivityMapBinding
     private var location = Location()
+    private var locations = arrayListOf<Location>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        location = intent.extras?.getParcelable<Location>("location")!!
+
+        if(intent.hasExtra("locations")){
+            locations = intent.extras?.getParcelableArrayList("locations")!!
+        }else {
+            location = intent.extras?.getParcelable<Location>("location")!!
+        }
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
+
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-        val loc = LatLng(location.lat, location.lng)
-        val options = MarkerOptions()
-            .title("Music Shop")
-            .snippet("GPS : $loc")
-            .draggable(true)
-            .position(loc)
-        map.setOnMarkerClickListener(this)
-        map.addMarker(options)
-        map.setOnMarkerDragListener(this)
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
+        if(locations.isEmpty()) {
+            val loc = LatLng(location.lat, location.lng)
+            val options = MarkerOptions()
+                .title("Music Shop")
+                .snippet("GPS : $loc")
+                .draggable(true)
+                .position(loc)
+            map.setOnMarkerClickListener(this)
+            map.addMarker(options)
+            map.setOnMarkerDragListener(this)
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
+        }else{
+            for(location in locations) {
+                val loc = LatLng(location.lat, location.lng)
+                val options = MarkerOptions()
+                    .title("Music Shop")
+                    .snippet("GPS : $loc")
+                    .draggable(true)
+                    .position(loc)
+                map.setOnMarkerClickListener(this)
+                map.addMarker(options)
+                map.setOnMarkerDragListener(this)
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
+            }
+        }
     }
 
     override fun onMarkerDrag(p0: Marker) {  }
@@ -59,7 +82,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback,
     override fun onMarkerDragStart(p0: Marker) {  }
 
     override fun onBackPressed() {
-
         val resultIntent = Intent()
         resultIntent.putExtra("location", location)
         setResult(Activity.RESULT_OK, resultIntent)
