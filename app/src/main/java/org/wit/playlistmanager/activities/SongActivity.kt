@@ -2,19 +2,22 @@ package org.wit.playlistmanager.activities
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import org.wit.playlistmanager.databinding.ActivityMainBinding
 import org.wit.playlistmanager.main.MainApp
 import org.wit.playlistmanager.models.playlist.PlaylistModel
+import org.wit.playlistmanager.models.song.Location
 import org.wit.playlistmanager.models.song.SongModel
 
 
 class SongActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     lateinit var app: MainApp
     var song = SongModel()
-
     var playlist = PlaylistModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +40,7 @@ class SongActivity : AppCompatActivity() {
             binding.btnAdd.text = "Update song"
             song = intent.extras?.getParcelable("song_edit")!!
             binding.toolbarAdd.title = "Update Song"
+            binding.songPurchaseLocation.text = "Update song purchase location"
             binding.songTitle.setText(song.title)
             binding.songArtist.setText(song.artist)
             binding.songMinute.setText(song.durationMin.toString())
@@ -87,6 +91,36 @@ class SongActivity : AppCompatActivity() {
                 }
             }
         }
-
+        binding.songPurchaseLocation.setOnClickListener {
+            val location = Location(52.245696, -7.139102, 15f)
+            if (song.zoom != 0f) {
+                location.lat =  song.lat
+                location.lng = song.lng
+                location.zoom = song.zoom
+            }
+            val launcherIntent = Intent(this, MapActivity::class.java)
+                .putExtra("location", location)
+            mapIntentLauncher.launch(launcherIntent)
+        }
+        registerMapCallback()
     }
+
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            val location = result.data!!.extras?.getParcelable<Location>("location")!!
+                            song.lat = location.lat
+                            song.lng = location.lng
+                            song.zoom = location.zoom
+                        }
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
+
 }

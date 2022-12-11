@@ -10,4 +10,12 @@ data class SongModel(var artist: String = "",
                      var durationSec: Int = 0,
                      var releaseYear: Int = 1111,
                      var wonAward: Boolean = false,
-                     var songId: Long = 0): Parcelable
+                     var songId: Long = 0,
+                     var lat: Double = 0.0,
+                     var lng: Double = 0.0,
+                     var zoom: Float = 0f) : Parcelable
+
+@Parcelize
+data class Location(var lat: Double = 0.0,
+                    var lng: Double = 0.0,
+                    var zoom: Float = 0f) : Parcelable
