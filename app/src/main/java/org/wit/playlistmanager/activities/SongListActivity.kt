@@ -11,6 +11,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.SearchView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import org.wit.playlistmanager.R
 import org.wit.playlistmanager.adapters.SongAdapter
 import org.wit.playlistmanager.adapters.SongListener
@@ -26,6 +29,7 @@ class SongListActivity : AppCompatActivity(), SongListener {
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var auth: FirebaseAuth;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +47,7 @@ class SongListActivity : AppCompatActivity(), SongListener {
         actionBarDrawerToggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        auth = Firebase.auth
         registerMapCallback()
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -57,6 +62,12 @@ class SongListActivity : AppCompatActivity(), SongListener {
                     mapIntentLauncher.launch(launcherIntent)
                     true
                 }
+                R.id.nav_logout -> {
+                    Firebase.auth.signOut()
+                    val launcherIntent = Intent(this, LoginActivity::class.java)
+                    startActivity(launcherIntent)
+                    true
+            }
                 else -> {false}
             }
         }
