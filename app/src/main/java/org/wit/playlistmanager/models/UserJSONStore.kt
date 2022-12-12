@@ -24,7 +24,7 @@ fun generateRandomId(): Long {
     return Random().nextLong()
 }
 
-class UserSONStore(private val context: Context) : PlaylistStore {
+class UserJSONStore(private val context: Context) : PlaylistStore {
 
     var users = mutableListOf<Users>()
 
