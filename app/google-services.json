@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "50462871582",
+    "project_id": "playlistmanager-f4f57",
+    "storage_bucket": "playlistmanager-f4f57.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50462871582:android:0c04efc01a56248e5d5e0f",
+        "android_client_info": {
+          "package_name": "org.wit.playlistmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50462871582-uogr3aaos1sr5n0d7amlj5t69e2ve618.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3Rf2pgyX5vRy1srMXg9LI492dZc8rgkE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50462871582-uogr3aaos1sr5n0d7amlj5t69e2ve618.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

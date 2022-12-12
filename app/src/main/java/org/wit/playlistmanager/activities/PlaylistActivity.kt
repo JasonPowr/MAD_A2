@@ -8,6 +8,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import org.wit.playlistmanager.R
 import org.wit.playlistmanager.databinding.ActivityPlaylistBinding
@@ -15,11 +18,13 @@ import org.wit.playlistmanager.helpers.showImagePicker
 import org.wit.playlistmanager.main.MainApp
 import org.wit.playlistmanager.models.playlist.PlaylistModel
 import org.wit.playlistmanager.models.song.SongModel
+import org.wit.playlistmanager.models.users.Users
 
 
 class PlaylistActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlaylistBinding
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var auth: FirebaseAuth;
 
     var playlist = PlaylistModel()
     lateinit var app: MainApp
@@ -34,6 +39,22 @@ class PlaylistActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbarAdd)
 
         app = application as MainApp
+
+        var currentlyAuthenticatedUser = Users("", arrayListOf(PlaylistModel()))
+        auth = Firebase.auth
+        val currentUser = auth.currentUser
+
+        val users = app.playlists.returnAllUsers()
+
+        for(user in users){
+            if (currentUser != null) {
+                if(user.UID == currentUser.uid){
+                    currentlyAuthenticatedUser = user
+                }
+            }
+
+        }
+
 
         var edit = false
         if (intent.hasExtra("playlist_edit")) {
@@ -64,9 +85,11 @@ class PlaylistActivity : AppCompatActivity() {
                     .show()
             } else {
                 if (edit) {
-                    app.playlists.update(playlist.copy())
+                    app.playlists.update(playlist.copy(),currentlyAuthenticatedUser)
+                    setResult(RESULT_OK)
+                    finish()
                 } else {
-                    app.playlists.create(playlist.copy())
+                    app.playlists.create(playlist.copy(),currentlyAuthenticatedUser)
                     setResult(RESULT_OK)
                     finish()
                 }

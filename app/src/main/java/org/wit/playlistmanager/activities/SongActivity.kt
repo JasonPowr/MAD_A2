@@ -6,17 +6,23 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import org.wit.playlistmanager.databinding.ActivityMainBinding
 import org.wit.playlistmanager.main.MainApp
 import org.wit.playlistmanager.models.playlist.PlaylistModel
 import org.wit.playlistmanager.models.song.Location
 import org.wit.playlistmanager.models.song.SongModel
+import org.wit.playlistmanager.models.users.Users
 
 
 class SongActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     lateinit var app: MainApp
+    private lateinit var auth: FirebaseAuth;
+    var currentlyAuthenticatedUser = Users("wrongUID", arrayListOf(PlaylistModel()))
     var song = SongModel()
     var playlist = PlaylistModel()
 
@@ -59,6 +65,20 @@ class SongActivity : AppCompatActivity() {
         }
         //https://www.geeksforgeeks.org/switch-in-kotlin/
 
+        auth = Firebase.auth
+        val currentUser = auth.currentUser
+        val users = app.playlists.returnAllUsers()
+        for(user in users){
+            if (currentUser != null) {
+                if(user.UID == currentUser.uid){
+                    currentlyAuthenticatedUser = user
+                }else if(intent.hasExtra("login") && user.UID == currentUser.uid){
+                    currentlyAuthenticatedUser = intent.extras?.getParcelable("login")!!
+                    currentlyAuthenticatedUser = user
+                }
+            }
+        }
+
         binding.btnAdd.setOnClickListener() {
 
             if (binding.songTitle.text.toString().isEmpty() || binding.songArtist.text.toString().isEmpty()) {
@@ -75,7 +95,7 @@ class SongActivity : AppCompatActivity() {
             }
             else {
                 if (edit) {
-                    app.playlists.updateSongInPlaylist(playlist, song.copy())
+                    app.playlists.updateSongInPlaylist(playlist, song.copy(), currentlyAuthenticatedUser)
                     val launcherIntent = Intent(this, PlaylistListActivity::class.java)
                     startActivity(launcherIntent)
                 }else{
@@ -85,7 +105,7 @@ class SongActivity : AppCompatActivity() {
                     song.durationSec = binding.songSecond.text.toString().toInt()
                     song.releaseYear = binding.songReleaseYear.text.toString().toInt()
 
-                    app.playlists.addSongToPlaylist(playlist, song.copy())
+                    app.playlists.addSongToPlaylist(playlist, song.copy(),currentlyAuthenticatedUser)
                     setResult(RESULT_OK)
                     finish()
                 }

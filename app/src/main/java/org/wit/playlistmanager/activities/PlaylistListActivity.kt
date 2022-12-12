@@ -21,6 +21,7 @@ import org.wit.playlistmanager.adapters.PlaylistListener
 import org.wit.playlistmanager.databinding.ActivityPlaylistListBinding
 import org.wit.playlistmanager.main.MainApp
 import org.wit.playlistmanager.models.playlist.PlaylistModel
+import org.wit.playlistmanager.models.users.Users
 
 
 class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
@@ -30,7 +31,7 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var auth: FirebaseAuth;
-
+    var currentlyAuthenticatedUser = Users("wrongUID", arrayListOf(PlaylistModel()))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +51,21 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
 
         auth = Firebase.auth
         registerMapCallback()
+
+        auth = Firebase.auth
+        val currentUser = auth.currentUser
+        val users = app.playlists.returnAllUsers()
+        for(user in users){
+            if (currentUser != null) {
+                if(user.UID == currentUser.uid){
+                    currentlyAuthenticatedUser = user
+                }else if(intent.hasExtra("login") && user.UID == currentUser.uid){
+                    currentlyAuthenticatedUser = intent.extras?.getParcelable("login")!!
+                    currentlyAuthenticatedUser = user
+                }
+            }
+        }
+
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_playlists -> {
@@ -58,7 +74,7 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
                     true
                 }
                 R.id.nav_maps -> {
-                    val locations = app.playlists.returnAllSongLocations()
+                    val locations = app.playlists.returnAllSongLocations(currentlyAuthenticatedUser)
                     val launcherIntent = Intent(this, MapActivity::class.java).putExtra("locations", locations)
                     mapIntentLauncher.launch(launcherIntent)
                     true
@@ -75,7 +91,7 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerViewplaylist.layoutManager = layoutManager
-        binding.recyclerViewplaylist.adapter = PlaylistAdapter(app.playlists.findAll(), this)
+        binding.recyclerViewplaylist.adapter = PlaylistAdapter(app.playlists.findAll(currentlyAuthenticatedUser), this)
 
         binding.addPlaylist.setOnClickListener{
             val launcherIntent = Intent(this, PlaylistActivity::class.java)
@@ -83,7 +99,7 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
             binding.emptyMessage.text = ""
         }
 
-        if (app.playlists.findAll().isNotEmpty()){
+        if (app.playlists.findAll(currentlyAuthenticatedUser).isNotEmpty()){
             binding.emptyMessage.text = ""
         }
     }
@@ -116,7 +132,7 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
             }
 
             override fun onQueryTextChange(query: String): Boolean {
-                filter(app.playlists.filterPlaylistNames(query))
+                filter(app.playlists.filterPlaylistNames(query, currentlyAuthenticatedUser))
                 return true
             }
         })
@@ -150,10 +166,10 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
     }
 
     override fun onDeleteButtonClick(playlist: PlaylistModel) {
-        app.playlists.delete(playlist)
-        binding.recyclerViewplaylist.adapter = PlaylistAdapter(app.playlists.findAll(), this)
+        app.playlists.delete(playlist, currentlyAuthenticatedUser)
+        binding.recyclerViewplaylist.adapter = PlaylistAdapter(app.playlists.findAll(currentlyAuthenticatedUser), this)
 
-        if(app.playlists.findAll().isEmpty()){
+        if(app.playlists.findAll(currentlyAuthenticatedUser).isEmpty()){
             binding.emptyMessage.text = "Nothing to see here....\nstart by adding a playlist"
         }
     }
@@ -164,7 +180,7 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 (binding.recyclerViewplaylist.adapter)?.
-                notifyItemRangeChanged(0,app.playlists.findAll().size)
+                notifyItemRangeChanged(0,app.playlists.findAll(currentlyAuthenticatedUser).size)
             }
         }
 }
