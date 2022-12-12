@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import org.wit.playlistmanager.R
 import org.wit.playlistmanager.adapters.PlaylistAdapter
 import org.wit.playlistmanager.adapters.PlaylistListener
@@ -26,6 +29,7 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var auth: FirebaseAuth;
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +48,7 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
         actionBarDrawerToggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        auth = Firebase.auth
         registerMapCallback()
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -56,6 +61,12 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
                     val locations = app.playlists.returnAllSongLocations()
                     val launcherIntent = Intent(this, MapActivity::class.java).putExtra("locations", locations)
                     mapIntentLauncher.launch(launcherIntent)
+                    true
+                }
+                R.id.nav_logout -> {
+                    Firebase.auth.signOut()
+                    val launcherIntent = Intent(this, LoginActivity::class.java)
+                    startActivity(launcherIntent)
                     true
                 }
                 else -> {false}
