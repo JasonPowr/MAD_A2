@@ -117,7 +117,6 @@ class UserJSONStore(private val context: Context) : PlaylistStore {
         }
     }
 
-
     override fun filterPlaylistNames(playListName: String, user: Users): List<PlaylistModel> {
         val filteredList = mutableListOf<PlaylistModel>()
         for(playlist in user.playlists){
