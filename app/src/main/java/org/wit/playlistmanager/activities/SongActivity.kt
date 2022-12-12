@@ -35,6 +35,20 @@ class SongActivity : AppCompatActivity() {
         binding.toolbarAdd.title = "Add a song to "+playlist.name
         setSupportActionBar(binding.toolbarAdd)
 
+        auth = Firebase.auth
+        val currentUser = auth.currentUser
+        val users = app.playlists.returnAllUsers()
+        for(user in users){
+            if (currentUser != null) {
+                if(user.UID == currentUser.uid){
+                    currentlyAuthenticatedUser = user
+                }else if(intent.hasExtra("login") && user.UID == currentUser.uid){
+                    currentlyAuthenticatedUser = intent.extras?.getParcelable("login")!!
+                    currentlyAuthenticatedUser = user
+                }
+            }
+        }
+
         var edit = false
 
         if (intent.hasExtra("playlist_add_song")) {
@@ -65,19 +79,6 @@ class SongActivity : AppCompatActivity() {
         }
         //https://www.geeksforgeeks.org/switch-in-kotlin/
 
-        auth = Firebase.auth
-        val currentUser = auth.currentUser
-        val users = app.playlists.returnAllUsers()
-        for(user in users){
-            if (currentUser != null) {
-                if(user.UID == currentUser.uid){
-                    currentlyAuthenticatedUser = user
-                }else if(intent.hasExtra("login") && user.UID == currentUser.uid){
-                    currentlyAuthenticatedUser = intent.extras?.getParcelable("login")!!
-                    currentlyAuthenticatedUser = user
-                }
-            }
-        }
 
         binding.btnAdd.setOnClickListener() {
 
@@ -95,9 +96,15 @@ class SongActivity : AppCompatActivity() {
             }
             else {
                 if (edit) {
+                    song.title = binding.songTitle.text.toString()
+                    song.artist = binding.songArtist.text.toString()
+                    song.durationMin = binding.songMinute.text.toString().toInt()
+                    song.durationSec = binding.songSecond.text.toString().toInt()
+                    song.releaseYear = binding.songReleaseYear.text.toString().toInt()
+
                     app.playlists.updateSongInPlaylist(playlist, song.copy(), currentlyAuthenticatedUser)
-                    val launcherIntent = Intent(this, PlaylistListActivity::class.java)
-                    startActivity(launcherIntent)
+                    setResult(RESULT_OK)
+                    finish()
                 }else{
                     song.title = binding.songTitle.text.toString()
                     song.artist = binding.songArtist.text.toString()
