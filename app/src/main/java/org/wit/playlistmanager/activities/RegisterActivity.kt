@@ -4,13 +4,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import org.wit.playlistmanager.databinding.ActivityRegisterBinding
 import org.wit.playlistmanager.main.MainApp
+import org.wit.playlistmanager.models.playlist.PlaylistModel
+import org.wit.playlistmanager.models.users.Users
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -40,7 +41,10 @@ class RegisterActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.e("TAG", "createUserWithEmail:success")
-                        val user = auth.currentUser
+                        val authUser = auth.currentUser
+                        val user = Users((authUser?.uid), arrayListOf(PlaylistModel()))
+                        app.playlists.createUsers(user)
+
                         val launcherIntent = Intent(this, LoginActivity::class.java)
                         startActivity(launcherIntent)
                     } else {

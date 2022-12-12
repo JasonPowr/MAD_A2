@@ -21,6 +21,7 @@ import org.wit.playlistmanager.databinding.ActivitySongListBinding
 import org.wit.playlistmanager.main.MainApp
 import org.wit.playlistmanager.models.playlist.PlaylistModel
 import org.wit.playlistmanager.models.song.SongModel
+import org.wit.playlistmanager.models.users.Users
 
 class SongListActivity : AppCompatActivity(), SongListener {
     lateinit var app: MainApp
@@ -30,6 +31,7 @@ class SongListActivity : AppCompatActivity(), SongListener {
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var auth: FirebaseAuth;
+    var currentlyAuthenticatedUser = Users("", arrayListOf(PlaylistModel()))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,23 +44,40 @@ class SongListActivity : AppCompatActivity(), SongListener {
 
         //https://www.geeksforgeeks.org/navigation-drawer-in-android/
         drawerLayout = findViewById(R.id.my_drawer_layout)
-        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close)
+        actionBarDrawerToggle =
+            ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close)
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         auth = Firebase.auth
         registerMapCallback()
+
+        auth = Firebase.auth
+        val currentUser = auth.currentUser
+        val users = app.playlists.returnAllUsers()
+        for (user in users) {
+            if (currentUser != null) {
+                if (user.UID == currentUser.uid) {
+                    currentlyAuthenticatedUser = user
+                }
+            }
+        }
+
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_playlists -> {
-                    val launcherIntent = Intent(this, PlaylistListActivity::class.java) //https://androidgeek.co/navigation-drawer-and-drawer-layout-in-kotlin-in-depth-guide-103ce411416d
+                    val launcherIntent = Intent(
+                        this,
+                        PlaylistListActivity::class.java
+                    ) //https://androidgeek.co/navigation-drawer-and-drawer-layout-in-kotlin-in-depth-guide-103ce411416d
                     startActivity(launcherIntent)
                     true
                 }
                 R.id.nav_maps -> {
-                    val locations = app.playlists.returnAllSongLocations()
-                    val launcherIntent = Intent(this, MapActivity::class.java).putExtra("locations", locations)
+                    val locations = app.playlists.returnAllSongLocations(currentlyAuthenticatedUser)
+                    val launcherIntent =
+                        Intent(this, MapActivity::class.java).putExtra("locations", locations)
                     mapIntentLauncher.launch(launcherIntent)
                     true
                 }
@@ -67,21 +86,25 @@ class SongListActivity : AppCompatActivity(), SongListener {
                     val launcherIntent = Intent(this, LoginActivity::class.java)
                     startActivity(launcherIntent)
                     true
-            }
-                else -> {false}
+                }
+                else -> {
+                    false
+                }
             }
         }
 
+
         if (intent.hasExtra("song_list")) {
             playlist = intent.extras?.getParcelable("song_list")!!
-            if (app.playlists.findAllSongs(playlist).isNotEmpty()){
+            if (app.playlists.findAllSongs(playlist, currentlyAuthenticatedUser).isNotEmpty()) {
                 binding.emptyMessage.text = ""
             }
         }
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerViewSong.layoutManager = layoutManager
-        binding.recyclerViewSong.adapter = SongAdapter(app.playlists.findAllSongs(playlist),this)
+        binding.recyclerViewSong.adapter =
+            SongAdapter(app.playlists.findAllSongs(playlist, currentlyAuthenticatedUser), this)
     }
 
     private fun registerMapCallback() {
@@ -111,7 +134,7 @@ class SongListActivity : AppCompatActivity(), SongListener {
             }
 
             override fun onQueryTextChange(query: String): Boolean {
-                filter(app.playlists.filterSongTitles(query, playlist))
+                filter(app.playlists.filterSongTitles(query, playlist,currentlyAuthenticatedUser))
                 return true
             }
         })
@@ -141,13 +164,15 @@ class SongListActivity : AppCompatActivity(), SongListener {
     }
 
     override fun onDeleteButtonPressed(song: SongModel) {
-        app.playlists.deleteSongFromPlaylist(song, playlist)
-        val newPlaylist = app.playlists.getPlaylistById(playlist.id)
-        binding.recyclerViewSong.adapter = SongAdapter(app.playlists.findAllSongs(newPlaylist!!),this)
+        app.playlists.deleteSongFromPlaylist(song, playlist, currentlyAuthenticatedUser)
+
+        val newPlaylist = app.playlists.getPlaylistById(playlist.id,currentlyAuthenticatedUser)
+        binding.recyclerViewSong.adapter = SongAdapter(app.playlists.findAllSongs(newPlaylist!!,currentlyAuthenticatedUser),this)
 
         if (newPlaylist.songs.size == 0){
             binding.emptyMessage.text = "No Songs found...\n start by adding some"
         }
+
     }
 
     private val getClickResult =
@@ -156,7 +181,7 @@ class SongListActivity : AppCompatActivity(), SongListener {
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 (binding.recyclerViewSong.adapter)?.
-                notifyItemRangeChanged(0,app.playlists.findAll().size)
+                notifyItemRangeChanged(0,app.playlists.findAll(currentlyAuthenticatedUser).size)
             }
         }
 

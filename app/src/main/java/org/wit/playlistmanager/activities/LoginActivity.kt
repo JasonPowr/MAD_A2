@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -44,11 +43,9 @@ class LoginActivity : AppCompatActivity() {
             auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
                     Log.e("TAG", "signInWithEmail:success")
-                    val user = auth.currentUser
-
-                    val launcherIntent = Intent(this, PlaylistListActivity::class.java)
+                    val firebaseUser = auth.currentUser
+                    val launcherIntent = Intent(this, PlaylistListActivity::class.java).putExtra("login",firebaseUser)
                     startActivity(launcherIntent)
                 } else {
                     Snackbar.make(it, "Unable to authenticate please try again", Snackbar.LENGTH_LONG).show()
@@ -61,10 +58,10 @@ class LoginActivity : AppCompatActivity() {
 
     public override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if(currentUser != null){
-            val launcherIntent = Intent(this, PlaylistListActivity::class.java)
+            val firebaseUser = auth.currentUser
+            val launcherIntent = Intent(this, PlaylistListActivity::class.java).putExtra("login",firebaseUser)
             startActivity(launcherIntent)
         }
     }
