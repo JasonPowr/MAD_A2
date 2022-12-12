@@ -18,7 +18,6 @@ import org.wit.playlistmanager.adapters.PlaylistListener
 import org.wit.playlistmanager.databinding.ActivityPlaylistListBinding
 import org.wit.playlistmanager.main.MainApp
 import org.wit.playlistmanager.models.playlist.PlaylistModel
-import org.wit.playlistmanager.models.song.Location
 
 
 class PlaylistListActivity : AppCompatActivity(), PlaylistListener {

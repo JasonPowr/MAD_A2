@@ -5,13 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.SearchView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.wit.playlistmanager.R
-import org.wit.playlistmanager.adapters.PlaylistAdapter
 import org.wit.playlistmanager.adapters.SongAdapter
 import org.wit.playlistmanager.adapters.SongListener
 import org.wit.playlistmanager.databinding.ActivitySongListBinding
@@ -25,6 +25,7 @@ class SongListActivity : AppCompatActivity(), SongListener {
     lateinit var playlist: PlaylistModel
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,11 +43,18 @@ class SongListActivity : AppCompatActivity(), SongListener {
         actionBarDrawerToggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        registerMapCallback()
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_playlists -> {
                     val launcherIntent = Intent(this, PlaylistListActivity::class.java) //https://androidgeek.co/navigation-drawer-and-drawer-layout-in-kotlin-in-depth-guide-103ce411416d
                     startActivity(launcherIntent)
+                    true
+                }
+                R.id.nav_maps -> {
+                    val locations = app.playlists.returnAllSongLocations()
+                    val launcherIntent = Intent(this, MapActivity::class.java).putExtra("locations", locations)
+                    mapIntentLauncher.launch(launcherIntent)
                     true
                 }
                 else -> {false}
@@ -63,6 +71,18 @@ class SongListActivity : AppCompatActivity(), SongListener {
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerViewSong.layoutManager = layoutManager
         binding.recyclerViewSong.adapter = SongAdapter(app.playlists.findAllSongs(playlist),this)
+    }
+
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
     }
 
     fun filter(filteredTitles: List<SongModel>){
