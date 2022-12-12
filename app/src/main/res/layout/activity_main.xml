@@ -120,7 +120,7 @@
                     android:layout_margin="8dp"
                     android:autofillHints="hint"
                     android:hint="@string/songReleaseYear"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:maxLength="25"
                     android:maxLines="1"
                     android:padding="8dp"
