@@ -51,7 +51,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/ic_menu_add"
-            app:fabCustomSize="40dp"/>
+            app:fabCustomSize="40dp"
+            app:backgroundTint="@color/purple"
+            app:tint="@color/pink"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/edit_playlistName"
@@ -63,7 +65,9 @@
             app:fabCustomSize="40dp"
             app:layout_constraintEnd_toStartOf="@+id/btnAdd"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_edit" />
+            app:srcCompat="@android:drawable/ic_menu_edit"
+            app:backgroundTint="@color/purple"
+            app:tint="@color/pink"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/playlistDelete"
@@ -75,7 +79,9 @@
             app:fabCustomSize="40dp"
             app:layout_constraintEnd_toStartOf="@+id/edit_playlistName"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_delete" />
+            app:srcCompat="@android:drawable/ic_menu_delete"
+            app:backgroundTint="@color/purple"
+            app:tint="@color/pink"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -29,67 +29,98 @@
                 app:titleTextColor="@color/colorPrimary" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <ScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/appBarLayout"
-            android:fillViewport="true">
+            android:layout_marginTop="1dp"
+            android:fillViewport="true"
+            tools:layout_editor_absoluteY="56dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+
+            <EditText
+                android:id="@+id/playlistName"
+                android:layout_width="343dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="48dp"
+                android:autofillHints="hint"
+                android:hint="@string/playlistName"
+                android:inputType="text"
+                android:maxLength="25"
+                android:maxLines="1"
+                android:padding="8dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_conversion_absoluteHeight="45dp"
+                tools:layout_conversion_absoluteWidth="395dp" />
+
+            <ImageView
+                android:id="@+id/edit_image"
+                android:layout_width="191dp"
+                android:layout_height="191dp"
+                android:layout_marginTop="20dp"
+                android:contentDescription="TODO"
+                android:src="@drawable/placeholder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/playlistName"
+                tools:layout_conversion_absoluteHeight="128dp"
+                tools:layout_conversion_absoluteWidth="411dp"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <Button
+                android:id="@+id/btnAddImage"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="248dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:stateListAnimator="@null"
+                android:text="Add Image"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/playlistName"
+                tools:layout_conversion_absoluteHeight="49dp"
+                tools:layout_conversion_absoluteWidth="379dp" />
 
-                <EditText
-                    android:id="@+id/playlistName"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_margin="8dp"
-                    android:autofillHints="hint"
-                    android:hint="@string/playlistName"
-                    android:inputType="text"
-                    android:maxLength="25"
-                    android:maxLines="1"
-                    android:padding="8dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:stateListAnimator="@null"
+                android:text="@string/menu_addPlaylist"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnAddImage"
+                tools:layout_conversion_absoluteHeight="49dp"
+                tools:layout_conversion_absoluteWidth="379dp" />
 
-                <ImageView
-                    android:id="@+id/edit_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:srcCompat="@tools:sample/avatars"
-                    android:contentDescription="TODO"
-                    android:layout_gravity="center"/>
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="200dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="24dp"
+                android:text="Enter a name for your playlist:"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.127"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/btnAddImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:background="@color/colorAccent"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:stateListAnimator="@null"
-                    android:text="Add Playlist Image"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp" />
 
-                <Button
-                    android:id="@+id/btnAdd"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:background="@color/colorAccent"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:stateListAnimator="@null"
-                    android:text="@string/menu_addPlaylist"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-        </ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

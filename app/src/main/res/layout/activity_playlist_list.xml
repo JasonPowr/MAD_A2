@@ -51,7 +51,10 @@
             app:layout_anchor="@+id/recyclerViewplaylist"
             app:layout_anchorGravity="end|bottom"
             app:srcCompat="@android:drawable/ic_menu_add"
-            app:fabCustomSize="71dp">
+            app:backgroundTint="@color/purple"
+            app:tint="@color/pink"
+            app:fabCustomSize="71dp"
+            app:maxImageSize="56dp">
 
         </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
@@ -73,6 +76,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:menu="@menu/nav_drawer" />
+        app:menu="@menu/nav_drawer"
+        app:headerLayout="@layout/drawer_header">
+    </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

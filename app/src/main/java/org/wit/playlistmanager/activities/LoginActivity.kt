@@ -46,6 +46,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.e("TAG", "signInWithEmail:success")
                     val firebaseUser = auth.currentUser
                     val launcherIntent = Intent(this, PlaylistListActivity::class.java).putExtra("login",firebaseUser)
+
                     startActivity(launcherIntent)
                 } else {
                     Snackbar.make(it, "Unable to authenticate please try again", Snackbar.LENGTH_LONG).show()

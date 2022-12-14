@@ -35,6 +35,7 @@ class UserJSONStore(private val context: Context) : PlaylistStore {
     }
 
     override fun createUsers(user: Users) {
+          user.playlists.removeAt(0)
           users.add(user)
     }
 
@@ -42,9 +43,14 @@ class UserJSONStore(private val context: Context) : PlaylistStore {
         return users
     }
 
+    override fun findAllUsersPlaylistsAsAArraylist(user: Users): ArrayList<PlaylistModel> {
+        return user.playlists
+    }
+
     override fun findAll(user: Users): MutableList<PlaylistModel> {
         return user.playlists
     }
+
 
     override fun create(playlist: PlaylistModel,user: Users) {
         playlist.id = generateRandomId()
@@ -126,21 +132,6 @@ class UserJSONStore(private val context: Context) : PlaylistStore {
         return filteredList
     }
 
-    override fun returnAllSongLocations(user: Users): ArrayList<Location> {
-        var location: Location
-        val locations = arrayListOf<Location>()
-
-        for(playlist in user.playlists){
-            for(song in playlist.songs) {
-                val songLat = song.lat
-                val songLng = song.lng
-                val songZoom = song.zoom
-                location = Location(songLat, songLng, songZoom)
-                locations.add(location)
-            }
-        }
-        return locations
-    }
 
 
     override fun findAllPlaylistNames(user: Users): ArrayList<String> {
