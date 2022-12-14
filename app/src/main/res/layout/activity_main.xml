@@ -137,29 +137,29 @@
 
                 <Button
                     android:id="@+id/songPurchaseLocation"
-                    android:layout_width="match_parent"
+                    android:layout_width="345dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
-                    android:background="@color/colorAccent"
-                    android:paddingBottom="8dp"
                     android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:stateListAnimator="@null"
                     android:text="@string/button_location"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:layout_gravity="center"/>
 
                 <Button
                     android:id="@+id/btnAdd"
-                    android:layout_width="match_parent"
+                    android:layout_width="166dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
-                    android:background="@color/colorAccent"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:stateListAnimator="@null"
                     android:text="@string/button_addSong"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:layout_gravity="center"/>
 
             </LinearLayout>
         </ScrollView>

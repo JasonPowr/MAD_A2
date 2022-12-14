@@ -3,17 +3,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="HardcodedText">
 
-    <item
-        android:id="@+id/nav_playlists"
-        android:title="Your Playlists" />
 
-    <item
-        android:id="@+id/nav_maps"
-        android:title="Map of song Stores" />
+        <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_playlists"
+                    android:title="Your Playlists" />
+        </group>
+
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_maps"
+            android:title="Map of song Stores" />
+    </group>
+
+    <group
+        android:id="@+id/group3"
+        android:checkableBehavior="single">
 
 
-    <item
-        android:id="@+id/nav_logout"
-        android:title="Logout" />
+        <item
+            android:id="@+id/nav_logout"
+            android:title="Logout" />
+    </group>
 
-</menu>
+    </menu>
+
+
+
+

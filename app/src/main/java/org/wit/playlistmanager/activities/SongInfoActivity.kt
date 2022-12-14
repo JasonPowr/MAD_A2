@@ -19,8 +19,6 @@ class SongInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySongInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.toolbar.title = title
-        setSupportActionBar(binding.toolbar)
 
         app = application as MainApp
 

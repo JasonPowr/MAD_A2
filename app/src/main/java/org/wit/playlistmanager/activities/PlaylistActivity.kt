@@ -55,7 +55,6 @@ class PlaylistActivity : AppCompatActivity() {
 
         }
 
-
         var edit = false
         if (intent.hasExtra("playlist_edit")) {
             edit = true

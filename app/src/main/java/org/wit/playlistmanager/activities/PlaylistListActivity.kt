@@ -74,8 +74,8 @@ class PlaylistListActivity : AppCompatActivity(), PlaylistListener {
                     true
                 }
                 R.id.nav_maps -> {
-                    val locations = app.playlists.returnAllSongLocations(currentlyAuthenticatedUser)
-                    val launcherIntent = Intent(this, MapActivity::class.java).putExtra("locations", locations)
+                    val playlists = app.playlists.findAllUsersPlaylistsAsAArraylist(currentlyAuthenticatedUser)
+                    val launcherIntent = Intent(this, MapActivity::class.java).putExtra("songs", playlists)
                     mapIntentLauncher.launch(launcherIntent)
                     true
                 }

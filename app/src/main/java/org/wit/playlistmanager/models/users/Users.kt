@@ -1,5 +1,8 @@
 package org.wit.playlistmanager.models.users
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import org.wit.playlistmanager.models.playlist.PlaylistModel
 
-data class Users(var UID: String?, var playlists: ArrayList<PlaylistModel>)
+@Parcelize
+data class Users(var UID: String?, var playlists: ArrayList<PlaylistModel>) : Parcelable

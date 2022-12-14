@@ -1,6 +1,5 @@
 package org.wit.playlistmanager.models.playlist
 
-import org.wit.playlistmanager.models.song.Location
 import org.wit.playlistmanager.models.song.SongModel
 import org.wit.playlistmanager.models.users.Users
 
@@ -17,7 +16,7 @@ interface PlaylistStore {
     fun filterSongTitles(songTitle: String, playlist: PlaylistModel, user: Users): List<SongModel>
     fun deleteSongFromPlaylist(song: SongModel,playlist: PlaylistModel, user: Users)
     fun getPlaylistById(id: Long, user: Users): PlaylistModel?
-    fun returnAllSongLocations(user: Users): ArrayList<Location>
     fun createUsers(user: Users)
     fun returnAllUsers(): List<Users>
+    fun findAllUsersPlaylistsAsAArraylist(user: Users): ArrayList<PlaylistModel>
 }
