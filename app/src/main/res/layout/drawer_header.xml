@@ -1,7 +1,6 @@
 <!-- res/layout/drawer_header.xml -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout2"
     android:layout_width="match_parent"
     android:layout_height="120dp">
@@ -32,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
         android:gravity="center"
-        android:text="Main Menu"
+        android:text="@string/main_menu"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

@@ -85,7 +85,7 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="8dp"
                         android:autofillHints="hint"
-                        android:hint="Minute"
+                        android:hint="@string/minute"
                         android:inputType="number"
                         android:maxLength="25"
                         android:maxLines="1"
@@ -102,7 +102,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="72dp"
                         android:layout_marginBottom="8dp"
-                        android:hint="Second"
+                        android:hint="@string/second"
                         android:inputType="number"
                         android:maxLength="25"
                         android:maxLines="1"
@@ -132,7 +132,7 @@
                     android:layout_width="324dp"
                     android:layout_height="71dp"
                     android:gravity="center"
-                    android:text="Award Won"
+                    android:text="@string/award_won"
                     android:textSize="20sp"/>
 
                 <Button
