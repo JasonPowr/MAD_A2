@@ -20,7 +20,7 @@
             android:id="@+id/songTitle"
             android:layout_width="154dp"
             android:layout_height="42dp"
-            android:text="Title"
+            android:text="@string/title"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,7 +30,7 @@
             android:layout_width="172dp"
             android:layout_height="47dp"
             android:layout_marginTop="40dp"
-            android:text="Artist"
+            android:text="@string/artist"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -47,7 +47,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/ic_menu_edit"
-            app:tint="@color/pink" />
+            app:tint="@color/pink"
+            android:contentDescription="@string/todo" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/songDelete"
@@ -61,7 +62,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/ic_menu_delete"
-            app:tint="@color/pink" />
+            app:tint="@color/pink"
+            android:contentDescription="@string/todo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
